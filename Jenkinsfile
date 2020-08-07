@@ -29,6 +29,11 @@ pipeline {
      stage('push docker image') {
       steps{
         echo "pushing docker image"
+        script{
+          withDockerRegistry("", registryCredential){
+          dockerImage.push()
+          }
+        }
       }
     }
      stage('Deploy to dev') {
