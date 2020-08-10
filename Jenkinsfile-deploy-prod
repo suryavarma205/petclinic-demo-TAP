@@ -4,11 +4,19 @@ stages{
   stage('deploy to prod1') {
     steps{
      echo "deploying to prod1"
+     sshagent(['ssh-key']) {
+     sh "ssh -o StrictHostKeyChecking=no ec2-user@  docker rm -f petclinic || true"
+     sh "ssh -o StrictHostKeyChecking=no ec2-user@  docker run  -d --name=petclinic -p 8081:8080 docker3032/petclinic"
+     }
     }
    }
     stage('deploy to prod2') {
       steps{
        echo "deploying to prod2"
+        sshagent(['ssh-key']) {
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@  docker rm -f petclinic || true"
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@  docker run  -d --name=petclinic -p 8081:8080 docker3032/petclinic"
+     }
     }
    }
  }
